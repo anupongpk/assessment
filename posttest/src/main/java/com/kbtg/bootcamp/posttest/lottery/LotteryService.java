@@ -1,5 +1,7 @@
 package com.kbtg.bootcamp.posttest.lottery;
 
+import com.kbtg.bootcamp.posttest.exception.DuplicationException;
+import com.kbtg.bootcamp.posttest.exception.InternalServiceException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,6 +27,14 @@ public class LotteryService {
 
 
     public String createLottery(@RequestBody LotteryRequest request){
+        // **check ticket already exits
+//        lotteries.stream().filter(lottery -> lottery.getTicket().equals(request.ticket()))
+//                .findFirst()
+//                .ifPresent(lottery -> {
+//                    throw new DuplicationException("This ticket " + request.ticket() + " already exits");
+//                });
+
+
         Optional<Integer> maxId = lotteries.stream().map(Lottery::getId).max(Integer::compareTo);
         int nextId = maxId.orElse(0)+1;
 

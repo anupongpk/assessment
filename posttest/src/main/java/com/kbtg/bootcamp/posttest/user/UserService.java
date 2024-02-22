@@ -1,10 +1,11 @@
 package com.kbtg.bootcamp.posttest.user;
 
+import com.kbtg.bootcamp.posttest.exception.InternalServiceException;
+import com.kbtg.bootcamp.posttest.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -18,11 +19,23 @@ public class UserService {
     );
 
     public List<User> getUsers (){
+//        try{
+//            callService();
+//        }catch (Exception e){
+//            throw new InternalServiceException("Internal Service exception with User service");
+//        }
         return users;
     }
 
 
-    public Optional<User> getUserById(int id) {
-        return users.stream().filter(user->user.getId() == id).findFirst();
+    public User getUserById(int id) {
+        return users.stream().filter(user->user.getId() == id)
+                .findFirst()
+                .orElseThrow(()-> new NotFoundException("User not found by id " + id));
     }
+
+
+//    public void callService(){
+//        throw new RuntimeException();
+//    }
 }
