@@ -20,8 +20,14 @@ public class LotteryService {
     }
 
     
-    public List<Lottery> getLotteries(){
-        return lotteryRepository.findAll();
+    public LotteryResponse getLotteries(){
+        List<Lottery> lotteries = lotteryRepository.findAll();
+        List<String> tickets = lotteries.stream().map(Lottery::getTicket).toList();
+
+        LotteryResponse lotteryResponse = new LotteryResponse();
+        lotteryResponse.setTickets(tickets);
+
+        return  lotteryResponse;
     }
 
 

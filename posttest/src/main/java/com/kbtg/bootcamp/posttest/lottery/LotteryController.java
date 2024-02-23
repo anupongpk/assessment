@@ -15,7 +15,7 @@ public class LotteryController {
     }
 
     @GetMapping("/lotteries")
-    public List<Lottery> getLotteries(){
+    public LotteryResponse getLotteries(){
        return lotteryService.getLotteries();
     }
 
