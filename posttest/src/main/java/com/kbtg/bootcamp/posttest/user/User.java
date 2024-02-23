@@ -7,18 +7,18 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class Users {
+public class User {
 
     @Id
     private int id;
 
     private String name;
 
-    public Users(){
+    public User(){
 
     }
 
-    public Users(int id, String name){
+    public User(int id, String name){
         this.id = id;
         this.name = name;
     }
