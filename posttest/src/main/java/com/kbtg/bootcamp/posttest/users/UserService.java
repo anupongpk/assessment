@@ -10,13 +10,21 @@ import java.util.List;
 @Service
 public class UserService {
 
+    UserRepository userRepository;
+
     List<User> users = new ArrayList<>(
            List.of(
-                   new User(1001011110),
-                   new User(1001011111),
-                   new User(1001011112)
+                   new User(1001011110, "user1"),
+                   new User(1001011111, "user2"),
+                   new User(1001011112, "user3")
            )
     );
+
+
+    public UserService(UserRepository userRepository){
+        this.userRepository = userRepository;
+    }
+
 
     public List<User> getUsers (){
 //        try{
@@ -24,7 +32,8 @@ public class UserService {
 //        }catch (Exception e){
 //            throw new InternalServiceException("Internal Service exception with User service");
 //        }
-        return users;
+//        return users;
+        return userRepository.findAll();
     }
 
 

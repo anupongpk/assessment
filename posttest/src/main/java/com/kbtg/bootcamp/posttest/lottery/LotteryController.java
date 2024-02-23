@@ -15,13 +15,13 @@ public class LotteryController {
     }
 
     @GetMapping("/lotteries")
-    public List<String> getLotteries(){
+    public List<Lottery> getLotteries(){
        return lotteryService.getLotteries();
     }
 
 
     @PostMapping("/admin/lotteries")
-    public String createLottery(
+    public Lottery createLottery(
             @Validated
             @RequestBody LotteryRequest request){
         return lotteryService.createLottery(request);

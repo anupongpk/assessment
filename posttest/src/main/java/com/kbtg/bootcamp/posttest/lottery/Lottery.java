@@ -1,20 +1,34 @@
 package com.kbtg.bootcamp.posttest.lottery;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-import java.util.List;
-
+@Entity
+@Table(name = "lottery")
 public class Lottery {
-    private final int id;
 
-    @JsonProperty("ticket")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotNull
     private String ticket;
 
-    @JsonProperty("price")
+
     private int price;
 
-    @JsonProperty("amount")
+
     private int amount;
+
+    public Lottery(){
+
+    }
+
+    public Lottery(@NotNull(message = "Ticket is required.") @Size(min = 6, max = 6, message = "Ticket must be 6 digits.") String ticket, @Min(value = 80, message = "Price must be at least 80.") int price, @Min(value = 1, message = "Amount must be at least 1") int amount){
+
+    }
 
     public Lottery( int id, String ticket , int price , int amount){
         this.id = id;
