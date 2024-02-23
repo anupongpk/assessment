@@ -14,12 +14,15 @@ public class Lottery {
     private int id;
 
     @NotNull
+    @Size(min=6 , max=6)
     private String ticket;
 
-
+    @NotNull
+    @Min(value = 80)
     private int price;
 
-
+    @NotNull
+    @Min(value = 1)
     private int amount;
 
     public Lottery(){

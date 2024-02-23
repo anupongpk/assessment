@@ -1,4 +1,4 @@
-package com.kbtg.bootcamp.posttest.users;
+package com.kbtg.bootcamp.posttest.user;
 
 import org.springframework.stereotype.Service;
 
