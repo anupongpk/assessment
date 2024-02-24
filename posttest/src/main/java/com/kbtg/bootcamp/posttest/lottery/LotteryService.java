@@ -28,6 +28,10 @@ public class LotteryService {
         return new LotteryResponse(tickets);
     }
 
+    public Optional<Lottery> getLotteryById(int id){
+        return lotteryRepository.findById(Long.valueOf(id));
+    }
+
 
     @Transactional
     public LotteryResponse createLottery(@RequestBody LotteryRequest request){

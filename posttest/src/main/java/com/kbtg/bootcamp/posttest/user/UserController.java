@@ -1,9 +1,7 @@
 package com.kbtg.bootcamp.posttest.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,6 +23,13 @@ public class UserController {
     @GetMapping("/{userId}")
     public User getUserById(@PathVariable("userId") int id){
         return  userService.getUserById(id);
+    }
+
+    @PostMapping("/{userId}/lotteries/{ticketId}")
+    public UserTicketResponse buyTicket(
+            @PathVariable int userId,
+            @PathVariable int ticketId ){
+       return userService.buyTicket(userId, ticketId);
     }
 
 }
