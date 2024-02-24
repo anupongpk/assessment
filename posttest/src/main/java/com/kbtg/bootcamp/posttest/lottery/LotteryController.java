@@ -21,7 +21,7 @@ public class LotteryController {
 
 
     @PostMapping("/admin/lotteries")
-    public Lottery createLottery(
+    public LotteryResponse createLottery(
             @Validated
             @RequestBody LotteryRequest request){
         return lotteryService.createLottery(request);

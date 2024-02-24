@@ -2,6 +2,7 @@ package com.kbtg.bootcamp.posttest.lottery;
 
 import com.kbtg.bootcamp.posttest.exception.DuplicationException;
 import com.kbtg.bootcamp.posttest.exception.InternalServiceException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -24,14 +25,12 @@ public class LotteryService {
         List<Lottery> lotteries = lotteryRepository.findAll();
         List<String> tickets = lotteries.stream().map(Lottery::getTicket).toList();
 
-        LotteryResponse lotteryResponse = new LotteryResponse();
-        lotteryResponse.setTickets(tickets);
-
-        return  lotteryResponse;
+        return new LotteryResponse(tickets);
     }
 
 
-    public Lottery createLottery(@RequestBody LotteryRequest request){
+    @Transactional
+    public LotteryResponse createLottery(@RequestBody LotteryRequest request){
         Lottery lottery = new Lottery();
 
         lottery.setTicket(request.ticket());
@@ -40,7 +39,7 @@ public class LotteryService {
 
         lotteryRepository.save(lottery);
 
-        return lottery;
+        return new LotteryResponse(lottery.getTicket());
     }
     
 }
