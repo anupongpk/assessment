@@ -16,7 +16,7 @@ public class UserTicket {
     private Integer userId;
 
     @NotNull
-    private int lottery_id;
+    private int ticketId;
 
     @NotNull
     private int quantity;
@@ -24,9 +24,13 @@ public class UserTicket {
     @NotNull
     private int price;
 
-    public UserTicket(int userId, int lottery_id, int quantity, int price) {
+    public UserTicket(){
+
+    }
+
+    public UserTicket(int userId, int ticketId, int quantity, int price) {
         this.userId = userId;
-        this.lottery_id = lottery_id;
+        this.ticketId = ticketId;
         this.quantity = quantity;
         this.price = price;
     }
@@ -39,8 +43,8 @@ public class UserTicket {
         return userId;
     }
 
-    public int getLottery_id() {
-        return lottery_id;
+    public int getTicketId() {
+        return ticketId;
     }
 
     public int getQuantity() {
@@ -59,8 +63,8 @@ public class UserTicket {
         this.userId = userId;
     }
 
-    public void setLottery_id(int lottery_id) {
-        this.lottery_id = lottery_id;
+    public void setTicketId(int ticketId) {
+        this.ticketId = ticketId;
     }
 
     public void setQuantity(int quantity) {

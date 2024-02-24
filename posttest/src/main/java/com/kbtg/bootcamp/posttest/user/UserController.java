@@ -1,5 +1,7 @@
 package com.kbtg.bootcamp.posttest.user;
 
+import com.kbtg.bootcamp.posttest.lottery.LotteryResponse;
+import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +27,25 @@ public class UserController {
         return  userService.getUserById(id);
     }
 
-    @PostMapping("/{userId}/lotteries/{ticketId}")
-    public UserTicketResponse buyTicket(
-            @PathVariable int userId,
-            @PathVariable int ticketId ){
-       return userService.buyTicket(userId, ticketId);
+
+    @GetMapping("/{userId}/lotteries")
+    public UserResponse getMyLotteries(@PathVariable("userId") int userId){
+        return userService.getMyLotteries(userId);
     }
 
+
+    @PostMapping("/{userId}/lotteries/{ticketId}")
+    public UserTicketResponse buyLottery(
+            @PathVariable("userId") int userId,
+            @PathVariable("ticketId") int ticketId ){
+       return userService.buyLottery(userId, ticketId);
+    }
+
+
+    @DeleteMapping("/{userId}/lotteries/{ticketId}")
+    public LotteryResponse deleteLottery(
+            @PathVariable("userId") int userId,
+            @PathVariable("ticketId") int ticketId){
+        return userService.deleteLottery(userId, ticketId);
+    }
 }
