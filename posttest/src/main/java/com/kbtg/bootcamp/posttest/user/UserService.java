@@ -7,6 +7,7 @@ import com.kbtg.bootcamp.posttest.lottery.LotteryResponse;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketRepository;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +33,15 @@ public class UserService {
     public User getUserById(int id) {
         return userRepository.findById((long) id)
                 .stream().findFirst()
-                .orElseThrow(() -> new NotFoundException("This user id :" + id + " not found"));
+                .orElseThrow(() -> new NotFoundException("This user id : " + id + " not found"));
     }
 
 
     public UserResponse getMyLotteries(int userId) {
+        getUserById(userId);
         List<UserTicket> userTickets = userTicketRepository.findByUserId(userId);
 
         List<String> tickets = new ArrayList<>();
-
         List<Integer> lotteryIds = userTickets.stream().map(UserTicket::getTicketId).toList();
 
         lotteryIds.forEach(lotteryId -> {
@@ -59,11 +60,12 @@ public class UserService {
         return new UserResponse(tickets, count, cost);
     }
 
+    @Transactional
     public UserTicketResponse buyLottery(int userId, int ticketId) {
         getUserById(userId);
         Lottery lottery = lotteryRepository.findById((long) ticketId)
                 .stream().findFirst()
-                .orElseThrow(() -> new NotFoundException("This lottery id :" + ticketId + " not found"));
+                .orElseThrow(() -> new NotFoundException("This lottery id : " + ticketId + " not found"));
 
         UserTicket userTicket = new UserTicket(userId, ticketId, 1, lottery.getPrice());
         UserTicket saveUserTicket = userTicketRepository.save(userTicket);
@@ -96,12 +98,14 @@ public class UserService {
         }).sum();
     }
 
-
+    @Transactional
     public LotteryResponse deleteLottery(int userId, int ticketId){
-        Optional<UserTicket> userTicket = userTicketRepository.findByUserId(userId)
+        getUserById(userId);
+        Optional<UserTicket> userTicket = Optional.ofNullable(userTicketRepository.findByUserId(userId)
                 .stream()
                 .filter(ut -> ut.getTicketId() == ticketId)
-                .findFirst();
+                .findFirst()
+                .orElseThrow(() -> new NotFoundException("This lottery id : " + ticketId + " not found")));
 
         if(userTicket.isPresent()){
             String ticket = lotteryRepository.findById((long) ticketId).stream().findFirst().get().getTicket();

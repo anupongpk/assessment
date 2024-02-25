@@ -3,6 +3,7 @@ package com.kbtg.bootcamp.posttest.lottery;
 import com.kbtg.bootcamp.posttest.exception.DuplicationException;
 import com.kbtg.bootcamp.posttest.exception.InternalServiceException;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,11 +15,8 @@ import java.util.stream.Collectors;
 @Service
 public class LotteryService {
 
+    @Autowired
     LotteryRepository lotteryRepository;
-
-    public LotteryService(LotteryRepository lotteryRepository){
-        this.lotteryRepository = lotteryRepository;
-    }
 
     
     public LotteryResponse getLotteries(){
@@ -41,9 +39,13 @@ public class LotteryService {
         lottery.setPrice(request.price());
         lottery.setAmount(request.amount());
 
-        lotteryRepository.save(lottery);
+        try{
+            lotteryRepository.save(lottery);
+            return new LotteryResponse(lottery.getTicket());
+        }catch (Exception e){
+            throw new InternalServiceException("Error creating lottery. Please try again later.");
+        }
 
-        return new LotteryResponse(lottery.getTicket());
     }
     
 }
