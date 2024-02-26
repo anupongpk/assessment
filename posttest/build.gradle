@@ -18,6 +18,19 @@ configurations {
 	}
 }
 
+tasks.register('controllerTest', Test) {
+	// to prevent Mockito's inline mock maker fail on container
+	jvmArgs('-Djdk.attach.allowAttachSelf=true', '-XX:+StartAttachListener')
+
+	description = 'Runs integration tests.'
+	group = 'verification'
+	useJUnitPlatform()
+	filter {
+		include '**/*ControllerTest.*'
+	}
+}
+
+
 repositories {
 	mavenCentral()
 }
@@ -39,6 +52,17 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.junit.jupiter:junit-jupiter'
+	testImplementation 'org.testcontainers:testcontainers:1.24.0'
+}
+
+sourceSets {
+	integrationTest {
+		java {
+			compileClasspath += main.output + test.output
+			runtimeClasspath += main.output + test.output
+			srcDir file('src/test/java')
+		}
+	}
 }
 
 tasks.named('test') {
