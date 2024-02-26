@@ -33,17 +33,4 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiExceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-
-    @ExceptionHandler(value = {DuplicationException.class})
-    public ResponseEntity<Object> handlerDuplicationException(DuplicationException e){
-        ApiExceptionResponse apiExceptionResponse = new ApiExceptionResponse(
-                e.getMessage(),
-                HttpStatus.BAD_REQUEST,
-                ZonedDateTime.now()
-        );
-
-        return new ResponseEntity<>(apiExceptionResponse, HttpStatus.BAD_REQUEST);
-
-    }
-
 }

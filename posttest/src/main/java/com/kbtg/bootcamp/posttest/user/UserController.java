@@ -1,7 +1,6 @@
 package com.kbtg.bootcamp.posttest.user;
 
 import com.kbtg.bootcamp.posttest.lottery.LotteryResponse;
-import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
 import org.springframework.web.bind.annotation.*;
 

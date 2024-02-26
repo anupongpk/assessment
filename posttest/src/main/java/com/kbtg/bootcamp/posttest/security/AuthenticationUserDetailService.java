@@ -1,6 +1,5 @@
 package com.kbtg.bootcamp.posttest.security;
 
-import com.kbtg.bootcamp.posttest.security.CustomUserDetail;
 import com.kbtg.bootcamp.posttest.user.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
