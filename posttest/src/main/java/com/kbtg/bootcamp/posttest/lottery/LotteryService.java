@@ -2,18 +2,20 @@ package com.kbtg.bootcamp.posttest.lottery;
 
 import com.kbtg.bootcamp.posttest.exception.InternalServiceException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class LotteryService {
 
-    @Autowired
-    LotteryRepository lotteryRepository;
+    private final LotteryRepository lotteryRepository;
+
+
+    public LotteryService(LotteryRepository lotteryRepository) {
+        this.lotteryRepository = lotteryRepository;
+    }
 
     
     public LotteryResponse getLotteries(){
@@ -22,11 +24,6 @@ public class LotteryService {
 
         return new LotteryResponse(tickets);
     }
-
-    public Optional<Lottery> getLotteryById(int id){
-        return lotteryRepository.findById(Long.valueOf(id));
-    }
-
 
     @Transactional
     public LotteryResponse createLottery(@RequestBody LotteryRequest request){
