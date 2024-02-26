@@ -12,14 +12,9 @@ import java.util.List;
 @Service
 public class AuthenticationUserDetailService implements UserDetailsService {
 
-    private final UserRepository userRepository;
-
     List<CustomUserDetail> userDetails  = new ArrayList<>();
 
-
-
     public AuthenticationUserDetailService(UserRepository userRepository) {
-        this.userRepository = userRepository;
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 

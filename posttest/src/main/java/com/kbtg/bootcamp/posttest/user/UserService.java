@@ -35,9 +35,13 @@ public class UserService {
                 .orElseThrow(() -> new NotFoundException("This user id : " + id + " not found"));
     }
 
+    private void checkUserExists(int userId) {
+        getUserById(userId);
+    }
+
 
     public UserResponse getMyLotteries(int userId) {
-        getUserById(userId);
+        checkUserExists(userId);
         List<UserTicket> userTickets = userTicketRepository.findByUserId(userId);
 
         List<String> tickets = new ArrayList<>();
@@ -61,7 +65,7 @@ public class UserService {
 
     @Transactional
     public UserTicketResponse buyLottery(int userId, int ticketId) {
-        getUserById(userId);
+        checkUserExists(userId);
         Lottery lottery = lotteryRepository.findById((long) ticketId)
                 .stream().findFirst()
                 .orElseThrow(() -> new NotFoundException("This lottery id : " + ticketId + " not found"));
@@ -99,7 +103,7 @@ public class UserService {
 
     @Transactional
     public LotteryResponse deleteLottery(int userId, int ticketId){
-        getUserById(userId);
+        checkUserExists(userId);
         Optional<UserTicket> userTicket = Optional.ofNullable(userTicketRepository.findByUserId(userId)
                 .stream()
                 .filter(ut -> ut.getTicketId() == ticketId)
