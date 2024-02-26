@@ -8,7 +8,6 @@ import com.kbtg.bootcamp.posttest.userTicket.UserTicket;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketRepository;
 import com.kbtg.bootcamp.posttest.userTicket.UserTicketResponse;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,12 +17,15 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private LotteryRepository lotteryRepository;
-    @Autowired
-    private UserTicketRepository userTicketRepository;
+    private final UserRepository userRepository;
+    private final LotteryRepository lotteryRepository;
+    private final UserTicketRepository userTicketRepository;
+
+    public UserService(UserRepository userRepository, LotteryRepository lotteryRepository, UserTicketRepository userTicketRepository) {
+        this.userRepository = userRepository;
+        this.lotteryRepository = lotteryRepository;
+        this.userTicketRepository = userTicketRepository;
+    }
 
     public List<User> getUsers() {
         return userRepository.findAll();
