@@ -12,15 +12,15 @@ public class User {
     @Id
     private Integer id;
 
-    private String name;
+    private String username;
 
     public User(){
 
     }
 
-    public User(int id, String name){
+    public User(int id, String username){
         this.id = id;
-        this.name = name;
+        this.username = username;
     }
 
     public int getId() {
@@ -28,6 +28,15 @@ public class User {
     }
 
     public String getName(){
-        return name;
+        return username;
     }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setName(String username) {
+        this.username = username;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.kbtg.bootcamp.posttest.lottery;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ public class LotteryController {
        return lotteryService.getLotteries();
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/lotteries")
     public LotteryResponse createLottery(
             @Validated
